@@ -1,0 +1,77 @@
+{
+  "model_name": "DecisionTree",
+  "hyperparameters": {
+    "max_depth": 5,
+    "min_samples_leaf": 20,
+    "class_weight": "balanced"
+  },
+  "training_rows": 45076,
+  "training_label_1": 2830,
+  "training_ranges": {
+    "nloc": {
+      "min": 1.0,
+      "p99": 259.25,
+      "max": 4424.0
+    },
+    "complexity": {
+      "min": 1.0,
+      "p99": 74.0,
+      "max": 1338.0
+    },
+    "token_count": {
+      "min": 5.0,
+      "p99": 1816.0,
+      "max": 28930.0
+    },
+    "top_nesting_level": {
+      "min": 0.0,
+      "p99": 4.0,
+      "max": 7.0
+    },
+    "n_params": {
+      "min": 0.0,
+      "p99": 9.0,
+      "max": 41.0
+    }
+  },
+  "decision_threshold": 0.5,
+  "sealed_test_evaluated": false,
+  "label_definition": "label 1 = function changed by a CVE-fixing commit; label 0 = other function in the same pre-fix file (not verified vulnerable or safe)",
+  "note": "Development model: fitted on all development data. The sealed test set has not been used yet.",
+  "cv_mean_f1": 0.2125225237075686,
+  "selection_trace": {
+    "best_by_f1": "LogisticRegression",
+    "best_mean_f1": 0.22070504984465264,
+    "se_of_best": 0.008499599687904855,
+    "one_se_threshold": 0.2122054501567478,
+    "within_one_se": [
+      "LogisticRegression",
+      "DecisionTree"
+    ],
+    "mean_f1": {
+      "LogisticRegression": 0.22070504984465264,
+      "DecisionTree": 0.2125225237075686,
+      "SVM": 0.20154183287382937,
+      "RandomForest": 0.13658909928145804,
+      "XGBoost": 0.19647994868344407
+    },
+    "mean_recall": {
+      "LogisticRegression": 0.44811915720088163,
+      "DecisionTree": 0.637857620103818,
+      "SVM": 0.5405204939629543,
+      "RandomForest": 0.1303773788785421,
+      "XGBoost": 0.5737358017686803
+    },
+    "selected": "DecisionTree",
+    "decided_by": "step 2: highest mean recall among models within one SE"
+  },
+  "version": "v001",
+  "feature_names": [
+    "nloc",
+    "complexity",
+    "token_count",
+    "top_nesting_level",
+    "n_params"
+  ],
+  "created_utc": "2026-11-22T16:52:57.180021+00:00"
+}

@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+logs/
+# Large downloaded/generated data; not required to serve the model.
+data/raw/
+data/interim/CVEfixes.db
+data/ground_truth/review_queue.csv
