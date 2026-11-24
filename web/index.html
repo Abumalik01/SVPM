@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Software Vulnerability Prediction</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header><div><p class="eyebrow">SVPM · C / C++</p><h1>Code review prioritization</h1>
+    <p class="sub">A statistical decision support estimate to help decide where to review first.</p></div>
+    <div id="model" class="model">Loading model…</div></header>
+  <main>
+    <div class="notice"><strong>Prediction only.</strong> A score is not proof that code is vulnerable or safe. The model reflects functions changed by past CVE-fixing commits and mostly reflects function size.</div>
+    <nav aria-label="Sections"><button class="tab active" data-page="predict">Analyse code</button><button class="tab" data-page="admin">Administration</button></nav>
+    <section id="predict">
+      <div class="card"><h2>Choose input</h2>
+        <div class="choices"><label><input type="radio" name="mode" value="file" checked> Upload a file</label><label><input type="radio" name="mode" value="paste"> Paste functions</label><label><input type="radio" name="mode" value="metrics"> Enter metrics</label></div>
+        <form id="file-form" class="input-panel"><label>Complete C/C++ source file <input id="source-file" type="file" accept=".c,.h,.cc,.cpp,.cxx,.hpp,.hh"></label><p class="hint">Up to 1 MB and 2,000 functions. Source code is processed but never stored in the prediction log.</p><button>Analyse file</button></form>
+        <form id="paste-form" class="input-panel hidden"><label>Language <select id="language"><option value="c">C</option><option value="cpp">C++</option></select></label><label>Complete function(s) <textarea id="code" rows="10" placeholder="Paste C or C++ source here"></textarea></label><button>Analyse functions</button></form>
+        <form id="metrics-form" class="input-panel hidden"><p class="hint">Enter the values a tool such as Lizard reports for one function.</p><div id="metric-fields" class="metrics"></div><button>Estimate</button></form>
+      </div>
+      <div id="message" role="status" aria-live="polite"></div><section id="results" class="card hidden"></section>
+    </section>
+    <section id="admin" class="hidden"><div class="card"><h2>Administration</h2><p>Requires <code>SVPM_ADMIN_TOKEN</code> to be set in the service environment.</p><label>Admin token <input id="admin-token" type="password" autocomplete="current-password"></label><div class="actions"><button id="versions">Show model versions</button><button id="logs">Show recent predictions</button></div><pre id="admin-output"></pre><p class="hint">The log stores metrics and results only. Uploaded source code is never stored. Retraining and model promotion remain administrator command-line tasks.</p></div></section>
+    <footer>Estimates are not calibrated probabilities and should not replace expert review.</footer>
+  </main>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>

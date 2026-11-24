@@ -10,6 +10,8 @@ import secrets
 from pathlib import Path
 
 from fastapi import Depends, FastAPI, File, Header, HTTPException, UploadFile
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from src import paths
@@ -30,10 +32,16 @@ class MetricsInput(BaseModel):
 
 def create_app(models_dir: Path | None = None, log_path: Path | None = None) -> FastAPI:
     models_dir = Path(models_dir or paths.MODELS_DIR)
-    log_path = Path(log_path or paths.LOG_DB)
+    log_path = Path(log_path or os.environ.get("SVPM_LOG_DB", paths.LOG_DB))
     predictor = predict.Predictor(models_dir)
     app = FastAPI(title="Software Vulnerability Prediction Prototype",
                   description="Decision-support estimate for C/C++ functions. " + predict.NOTICE)
+    web_dir = paths.ROOT / "web"
+    app.mount("/static", StaticFiles(directory=web_dir), name="static")
+
+    @app.get("/", include_in_schema=False)
+    def web_home():
+        return FileResponse(web_dir / "index.html")
 
     def _results(mode: str, items: list[dict]) -> dict:
         try:
